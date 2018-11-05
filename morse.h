@@ -8,6 +8,7 @@
 class Morse
 {
 private:
+    char delimiter = ' '; //maybe?
 
 public:
     Morse();

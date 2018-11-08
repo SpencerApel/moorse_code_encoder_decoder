@@ -8,12 +8,22 @@
 class Morse
 {
 private:
-    char delimiter = ' '; //maybe?
+    struct node
+    {
+        char letter;
+        std::string code;
+        node *left;
+        node *right;
+    };
+    const int alphabet_size = 26;
+    node *root;
+    void build_tree(const char *file_path);
+    void merge(std::string arr[], int left, int middle, int right);
+    void merge_sort(std::string arr[], int left, int right);
 
 public:
-    Morse();
+    Morse(const char *file_path);
     ~Morse();
-    void build_tree();
     std::string encode();
     std::string decode();
 };

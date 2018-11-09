@@ -9,17 +9,18 @@ class Morse
 {
 private:
     struct node
-    {
+    {  
         char letter;
         std::string code;
         node *left;
         node *right;
     };
-    const int alphabet_size = 26;
     node *root;
+    const char dot = '.';
+    const char dash = '_';
+    const int alphabet_size = 26;
     void build_tree(const char *file_path);
-    void merge(std::string arr[], int left, int middle, int right);
-    void merge_sort(std::string arr[], int left, int right);
+    void add_node(node *temp, std::string code, char c);
 
 public:
     Morse(const char *file_path);

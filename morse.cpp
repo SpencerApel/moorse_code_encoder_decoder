@@ -2,7 +2,8 @@
 
 Morse::Morse(const char *file_path)
 {
-    
+    root = nullptr;
+    build_tree(file_path);
 }
 
 Morse::~Morse()
@@ -12,7 +13,51 @@ Morse::~Morse()
     
 void Morse::build_tree(const char *file_path)
 {
-        
+    std::ifstream file_in; 
+    file_in.open(file_path); //open file
+
+    std::string morse_file;
+    for(int i = 0; i < alphabet_size; i++)
+    {
+        file_in >> morse_file;
+        add_node(root, morse_file.substr(1), morse_file[0]);
+    }
+
+}
+
+void Morse::add_node(node *temp, std::string code, char c)
+{
+    if(temp == nullptr)
+    {
+        std::cout << "tempnull" << std::endl;
+        temp->left = nullptr;
+        temp->right = nullptr;
+        temp->letter = ' ';
+        temp->code = " ";
+    }
+    if(code.size() == 0)
+    {
+        std::cout << "set letter " << c << std::endl;
+        //std::cout << "curr temp letter b4 set " >> temp->letter << "|" << std::endl;
+        //temp->letter = c;
+        temp->code = "code";
+        std::cout << "letter set" << std::endl;
+    }
+    else
+    {
+        if(code[0] == dot)
+        {
+            std::cout << "add dot" << std::endl;
+            std::cout << "code size: " << code.size() << std::endl;
+            add_node(temp->left, code.substr(1), c);
+        }
+        else
+        {
+            std::cout << "add dash" << std::endl;
+            std::cout << "code size: " << code.size() << std::endl;
+            add_node(temp->right, code.substr(1), c);
+        }
+    }
 }
     
 std::string Morse::encode()
@@ -23,69 +68,4 @@ std::string Morse::encode()
 std::string Morse::decode()
 {
 
-}
-
-void Morse::merge(std::string arr[], int left, int middle, int right)
-{
-    int i, j, k; 
-    int left_subarray_size = middle - left + 1; //size of left subarray
-    int right_subarray_size =  right - middle; //size of right subarray
-  
-    //Create temp arrays
-    std::string Left_subarray[left_subarray_size], Right_subarray[right_subarray_size]; 
-  
-    //Copy data to temp arrays
-    for (i = 0; i < left_subarray_size; i++) 
-        Left_subarray[i] = arr[left + i]; 
-    for (j = 0; j < right_subarray_size; j++) 
-        Right_subarray[j] = arr[middle + 1+ j]; 
-  
-    //Merge the temp arrays back into arr[l..r]
-    i = 0; //Initial index of first subarray 
-    j = 0; //Initial index of second subarray 
-    k = left; //Initial index of merged subarray 
-    while (i < left_subarray_size && j < right_subarray_size) //bounds checking
-    { 
-        if (Left_subarray[i].length() <= Right_subarray[j].length()) //if left[index] is less than right
-        { 
-            arr[k] = Left_subarray[i]; //put left[index] into array
-            i++; 
-        } 
-        else
-        { 
-            arr[k] = Right_subarray[j]; //put right[index] into array
-            j++; 
-        } 
-        k++; //increment index in new sorted array
-    } 
-  
-    //Copy the remaining elements of L[], if there are any
-    while (i < left_subarray_size) 
-    { 
-        arr[k] = Left_subarray[i]; 
-        i++; 
-        k++; 
-    } 
-  
-    //Copy the remaining elements of R[], if there are any
-    while (j < right_subarray_size) 
-    { 
-        arr[k] = Right_subarray[j]; 
-        j++; 
-        k++; 
-    } 
-}
-
-void Morse::merge_sort(std::string arr[], int left, int right)
-{
-    if (left < right) 
-    {
-        int m = left + (right - left) / 2; //finding mid point 
-  
-        // Sort first and second halves 
-        merge_sort(arr, left, m); 
-        merge_sort(arr, m + 1, right); 
-  
-        merge(arr, left, m, right); 
-    } 
 }

@@ -14,6 +14,8 @@ private:
         std::string code;
         node *left;
         node *right;
+
+        node(){letter = ' '; code = " "; left = nullptr; right = nullptr;}
     };
     node *root;
     const char dot = '.';

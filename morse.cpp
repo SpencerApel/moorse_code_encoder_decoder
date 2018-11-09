@@ -2,13 +2,13 @@
 
 Morse::Morse(const char *file_path)
 {
-    root = nullptr;
+    root = new node();
     build_tree(file_path);
 }
 
 Morse::~Morse()
 {
-
+    //delete[] root;
 }
     
 void Morse::build_tree(const char *file_path)
@@ -22,41 +22,20 @@ void Morse::build_tree(const char *file_path)
         file_in >> morse_file;
         add_node(root, morse_file.substr(1), morse_file[0]);
     }
-
 }
 
 void Morse::add_node(node *temp, std::string code, char c)
 {
     if(temp == nullptr)
-    {
-        std::cout << "tempnull" << std::endl;
-        temp->left = nullptr;
-        temp->right = nullptr;
-        temp->letter = ' ';
-        temp->code = " ";
-    }
+        temp = new node();
     if(code.size() == 0)
-    {
-        std::cout << "set letter " << c << std::endl;
-        //std::cout << "curr temp letter b4 set " >> temp->letter << "|" << std::endl;
-        //temp->letter = c;
-        temp->code = "code";
-        std::cout << "letter set" << std::endl;
-    }
+        temp->letter = c;
     else
     {
         if(code[0] == dot)
-        {
-            std::cout << "add dot" << std::endl;
-            std::cout << "code size: " << code.size() << std::endl;
             add_node(temp->left, code.substr(1), c);
-        }
         else
-        {
-            std::cout << "add dash" << std::endl;
-            std::cout << "code size: " << code.size() << std::endl;
             add_node(temp->right, code.substr(1), c);
-        }
     }
 }
     

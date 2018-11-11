@@ -45,20 +45,32 @@ Morse::node *Morse::add_node(node *temp, std::string code, char c)
 
 void Morse::encode(std::string code)
 {
-    
+    //std::cout << "Encoding: " << code << std::endl;
 }
 
 void Morse::encode(node *temp, std::string code)
 {
-
+    //make the string all lower case letters
 }
 
 void Morse::decode(std::string code)
 {
-    
+    std::string text;
+    std::cout << "Decoding: " << code << std::endl;
+    decode(root, code, text); //call decode function
+    std::cout << "Message:" << text << std::endl;
 }
 
-char Morse::decode(node *temp, std::string code)
+void Morse::decode(node *temp, std::string code, std::string &message)
 {
-    
+    if (code[0] == dot) //if char is a .
+        decode(temp->left, code.substr(1), message); //recursively call func with pointer to left and string code 1-length
+    else if (code[0] == dash) //if char is a _
+        decode(temp->right, code.substr(1), message); //recursively call func with pointer to right and string code 1-length
+    else if (code[0] == delimiter || code.length() == 0) //if theres a space or at the end of the code
+    {
+        message += temp->letter; //add letter to message
+        if(code.length() != 0) //if not at the end of the code        
+            decode(root, code.substr(1), message); //another recursive call using root (to start over from the top for the next char)
+    }
 }

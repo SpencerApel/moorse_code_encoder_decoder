@@ -27,7 +27,7 @@ class Morse
     void build_tree(const char *file_path); //opens file and builds tree by calling add_node()
     struct node *add_node(node *temp, std::string code, char c); //adds a node to the tree is respective location
     void encode(node *temp, std::string code); //function to encode regular text
-    char decode(node *temp, std::string code); //function to decode morse text
+    void decode(node *temp, std::string code, std::string &message); //function to decode morse text
 
   public:
     Morse(const char *file_path);

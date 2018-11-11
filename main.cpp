@@ -2,6 +2,8 @@
 
 int main()
 {
-    Morse("morse.txt");
+    Morse m = Morse("morse.txt");
+    m.encode("Morse code test");
+    m.decode(".__. ._. ___ __. ._. ._ __ __ .. _. __.");
     return 0;
 }

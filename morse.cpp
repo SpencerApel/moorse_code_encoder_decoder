@@ -10,41 +10,55 @@ Morse::~Morse()
 {
     //delete[] root;
 }
-    
+
 void Morse::build_tree(const char *file_path)
 {
-    std::ifstream file_in; 
+    std::ifstream file_in;
     file_in.open(file_path); //open file
 
     std::string morse_file;
-    for(int i = 0; i < alphabet_size; i++)
+    for (int i = 0; i < alphabet_size; i++) //loop through the file
     {
         file_in >> morse_file;
-        add_node(root, morse_file.substr(1), morse_file[0]);
+        root = add_node(root, morse_file.substr(1), morse_file[0]); //create a node and add to root
     }
 }
 
-void Morse::add_node(node *temp, std::string code, char c)
+Morse::node *Morse::add_node(node *temp, std::string code, char c)
 {
-    if(temp == nullptr)
-        temp = new node();
-    if(code.size() == 0)
-        temp->letter = c;
+    if (temp == nullptr) //if temp is nullptr
+        temp = new node(); //create new node
+    if (code.length() == 0) //if there are no more . or _
+    {
+        temp->letter = c; //set letter to current node
+        return temp;
+    }
     else
     {
-        if(code[0] == dot)
-            add_node(temp->left, code.substr(1), c);
-        else
-            add_node(temp->right, code.substr(1), c);
+        if (code[0] == dot) //if next char is a dot
+            temp->left = add_node(temp->left, code.substr(1), c); //go left and recursively call
+        else //if next char is a dash
+            temp->right = add_node(temp->right, code.substr(1), c); //go right and recursively call
     }
+    return temp;
 }
+
+void Morse::encode(std::string code)
+{
     
-std::string Morse::encode()
+}
+
+void Morse::encode(node *temp, std::string code)
 {
 
 }
-    
-std::string Morse::decode()
-{
 
+void Morse::decode(std::string code)
+{
+    
+}
+
+char Morse::decode(node *temp, std::string code)
+{
+    
 }

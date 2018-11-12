@@ -1,9 +1,14 @@
-#ifndef HEADER_H
-#define HEADER_H
+#ifndef MORSE_H
+#define MORSE_H
 
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <algorithm> //used for std::transform in encode(string)
+
+using std::cout;
+using std::endl;
+using std::string;
 
 class Morse
 {
@@ -11,7 +16,7 @@ class Morse
     struct node
     {
         char letter;
-        std::string code;
+        string code;
         node *left;
         node *right;
 
@@ -25,15 +30,15 @@ class Morse
     const int alphabet_size = 26;
 
     void build_tree(const char *file_path); //opens file and builds tree by calling add_node()
-    struct node *add_node(node *temp, std::string code, char c); //adds a node to the tree is respective location
-    void encode(node *temp, std::string code); //function to encode regular text
-    void decode(node *temp, std::string code, std::string &message); //function to decode morse text
+    node *add_node(node *temp, string code, char c); //adds a node to the tree is respective location
+    void encode(node *temp, string message, string &code); //function to encode regular text
+    void decode(node *temp, string code, string &message); //function to decode morse text
 
   public:
     Morse(const char *file_path);
     ~Morse();
-    void encode(std::string code); //wrapper function
-    void decode(std::string code); //wrapper function
+    void encode(string code); //wrapper function
+    void decode(string code); //wrapper function
 };
 
 #endif

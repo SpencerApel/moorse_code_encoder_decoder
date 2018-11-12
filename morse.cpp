@@ -16,7 +16,7 @@ void Morse::build_tree(const char *file_path)
     std::ifstream file_in;
     file_in.open(file_path); //open file
 
-    std::string morse_file;
+    string morse_file;
     for (int i = 0; i < alphabet_size; i++) //loop through the file
     {
         file_in >> morse_file;
@@ -24,7 +24,7 @@ void Morse::build_tree(const char *file_path)
     }
 }
 
-Morse::node *Morse::add_node(node *temp, std::string code, char c)
+Morse::node *Morse::add_node(node *temp, string code, char c)
 {
     if (temp == nullptr) //if temp is nullptr
         temp = new node(); //create new node
@@ -43,25 +43,52 @@ Morse::node *Morse::add_node(node *temp, std::string code, char c)
     return temp;
 }
 
-void Morse::encode(std::string code)
+void Morse::encode(string message)
 {
-    //std::cout << "Encoding: " << code << std::endl;
+    string code;
+    cout << "Encoding: " << message << endl;
+    std::transform(message.begin(), message.end(), message.begin(), ::tolower); //make the string all lower case letters
+    encode(root, message, code);
+    cout << "Code: " << code << endl;
 }
 
-void Morse::encode(node *temp, std::string code)
+void Morse::encode(node *temp, string message, string &code)
 {
-    //make the string all lower case letters
+    cout << "currently at: " << temp->letter << endl;
+
+    if(message[0] == temp->letter)
+    {
+        cout << "FOUND IT!" << endl;
+        if(message.substr(1).length() != 0)
+            encode(root, message.substr(1), code);
+    }
+    else if(temp->left == nullptr || temp->right == nullptr)
+    {
+        cout << "nullptr..." << endl;
+        if(temp->left == nullptr && temp->right == nullptr)
+            return;
+        else if(temp->left == nullptr)
+            encode(temp->right, message, code);
+        else if(temp->right == nullptr)
+            encode(temp->left, message, code);
+    }
+    else
+    {
+        cout << "rec call" << endl;
+        encode(temp->left, message, code);
+        encode(temp->right, message, code);
+    }
 }
 
-void Morse::decode(std::string code)
+void Morse::decode(string code)
 {
-    std::string text;
-    std::cout << "Decoding: " << code << std::endl;
-    decode(root, code, text); //call decode function
-    std::cout << "Message:" << text << std::endl;
+    string message;
+    cout << "Decoding: " << code << endl;
+    decode(root, code, message); //call decode function
+    cout << "Message: " << message << endl;
 }
 
-void Morse::decode(node *temp, std::string code, std::string &message)
+void Morse::decode(node *temp, string code, string &message)
 {
     if (code[0] == dot) //if char is a .
         decode(temp->left, code.substr(1), message); //recursively call func with pointer to left and string code 1-length

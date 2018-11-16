@@ -23,10 +23,10 @@ class Morse
         node(){letter = ' '; code = " "; left = nullptr; right = nullptr;} //node constructor
     } *root;
 
-    const char dot = '.'; //go left
-    const char dash = '_'; //go right
-    const char space = ' '; //space delimited for decoding string
-    const int alphabet_size = 26;
+    const char DOT = '.'; //go left
+    const char DASH = '_'; //go right
+    const char SPACE = ' '; //space delimited for decoding string
+    const int ALPHABET_SIZE = 26;
 
     void build_tree(const char *file_path); //opens file and builds tree by calling add_node()
     node *add_node(node *temp, string code, char c, string code2); //adds a node to the tree is respective location

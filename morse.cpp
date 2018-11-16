@@ -27,7 +27,7 @@ void Morse::build_tree(const char *file_path)
     file_in.open(file_path); //open file
 
     string morse_file;
-    for (int i = 0; i < alphabet_size; i++) //loop through the file
+    for (int i = 0; i < ALPHABET_SIZE; i++) //loop through the file
     {
         file_in >> morse_file;
         root = add_node(root, morse_file.substr(1), morse_file[0], morse_file.substr(1)); //create a node and add to root
@@ -46,9 +46,9 @@ Morse::node *Morse::add_node(node *temp, string code, char c, string code2)
     }
     else
     {
-        if (code[0] == dot) //if next char is a dot
+        if (code[0] == DOT) //if next char is a DOT
             temp->left = add_node(temp->left, code.substr(1), c, code2); //go left and recursively call
-        else //if next char is a dash
+        else //if next char is a DASH
             temp->right = add_node(temp->right, code.substr(1), c, code2); //go right and recursively call
     }
     return temp;
@@ -69,7 +69,7 @@ void Morse::encode(node *temp, string message, string &code)
     {
         code += temp->code; //set string code to the char's code
         if (message.substr(1).length() != 0) //if not at the last letter
-            encode(root, message.substr(1), code += " "); //recursive call where the message loses the first char, and a space is added to code
+            encode(root, message.substr(1), code += SPACE); //recursive call where the message loses the first char, and a space is added to code
         return;
     }
     if (temp->left == nullptr && temp->right == nullptr) //if left and right are nullptr
@@ -93,11 +93,11 @@ void Morse::decode(string code)
 
 void Morse::decode(node *temp, string code, string &message)
 {
-    if (code[0] == dot) //if char is a .
+    if (code[0] == DOT) //if char is a .
         decode(temp->left, code.substr(1), message); //recursively call func with pointer to left and string code 1-length
-    else if (code[0] == dash) //if char is a _
+    else if (code[0] == DASH) //if char is a _
         decode(temp->right, code.substr(1), message); //recursively call func with pointer to right and string code 1-length
-    else if (code[0] == space || code.length() == 0) //if theres a space or at the end of the code
+    else if (code[0] == SPACE || code.length() == 0) //if theres a SPACE or at the end of the code
     {
         message += temp->letter; //add letter to message
         if (code.length() != 0) //if not at the end of the code

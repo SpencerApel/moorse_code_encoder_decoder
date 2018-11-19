@@ -65,6 +65,16 @@ void Morse::encode(string message)
 
 void Morse::encode(node *temp, string message, string &code)
 {
+    if(message.length() == 0)
+        return;
+
+
+    // if(isalpha(message[0]) == false) //if the character is not a letter of the alphabet
+    //     encode(root, message.substr(1), code += " ? "); //add a ? since the char doesnt exist
+    // if(message[0] <= 'a' || message[0] >= 'z')
+    //     encode(root, message.substr(1), code += " ? ");
+
+
     if (message[0] == temp->letter) //if the letter is found
     {
         code += temp->code; //set string code to the char's code

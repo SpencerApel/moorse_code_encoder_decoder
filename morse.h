@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include <string>
-#include <fstream>
+#include <fstream> //for file input
 #include <algorithm> //used for std::transform in encode(string)
+#include <ctype.h> //to check if a char is part of the alphabet
 
 using std::cout;
 using std::endl;

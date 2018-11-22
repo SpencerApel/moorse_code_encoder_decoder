@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream> //for file input
 #include <algorithm> //used for std::transform in encode(string)
-#include <ctype.h> //to check if a char is part of the alphabet
+#include <ctype.h> //to check if a char is part of the alphabet isalpha()
 
 using std::cout;
 using std::endl;
